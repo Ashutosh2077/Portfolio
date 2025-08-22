@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashutosh Singh - Unity Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #e0e0e0;
+            --accent-color: #cccccc;
+            --text-light: #b0b0b0;
+            --text-lighter: #888888;
+            --background: #0a0a0a;
+            --surface: #111111;
+            --border: #222222;
+            --border-hover: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 200;
+            line-height: 1.6;
+            color: var(--primary-color);
+            background: var(--background);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Abstract Background Elements */
+        .abstract-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.08;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon points="100,50 200,150 50,200" fill="%23ffffff"/><circle cx="800" cy="200" r="30" fill="%23ffffff"/><polygon points="700,700 800,750 650,850" fill="%23ffffff"/><circle cx="200" cy="800" r="20" fill="%23ffffff"/></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(1deg);
+            }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 300;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 200;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 100;
+            line-height: 0.9;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .hero-text .subtitle {
+            font-size: 18px;
+            font-weight: 200;
+            color: var(--text-light);
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .hero-text .description {
+            font-size: 16px;
+            font-weight: 200;
+            color: var(--text-lighter);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .roles {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .role-tag {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 2px;
+            font-size: 12px;
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .role-tag:hover {
+            background: var(--primary-color);
+            color: var(--background);
+            transform: translateY(-2px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .abstract-shape {
+            width: 300px;
+            height: 300px;
+            position: relative;
+            animation: rotate 30s linear infinite;
+        }
+
+        .shape-element {
+            position: absolute;
+            border: 1px solid var(--border);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            top: 50px;
+            left: 50px;
+            transform: rotate(45deg);
+        }
+
+        .shape-2 {
+            width: 120px;
+            height: 120px;
+            top: 90px;
+            left: 90px;
+            border-radius: 50%;
+        }
+
+        .shape-3 {
+            width: 80px;
+            height: 80px;
+            top: 110px;
+            left: 110px;
+            transform: rotate(30deg);
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.1;
+                transform: scale(1.05);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 100;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 200;
+            color: var(--text-light);
+            margin-bottom: 80px;
+        }
+
+        /* Projects Section */
+        .projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .project-count {
+            font-size: 24px;
+            font-weight: 200;
+            color: var(--text-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+        }
+
+        .project-card {
+            perspective: 1000px;
+            height: 400px;
+            position: relative;
+        }
+
+        .project-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.4s;
+            transform-style: preserve-3d;
+        }
+
+        .project-card:hover .project-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .project-card-front,
+        .project-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+            border-radius: 8px;
+        }
+
+        .project-card-back {
+            transform: rotateY(180deg);
+            align-items: center;
+            justify-content: flex-start;
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .project-card-front:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 85%;
+            background: var(--border);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 14px;
+            text-align: center;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .project-image-placeholder {
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .project-number {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-lighter);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .project-title {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .project-description {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .project-tag {
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 4px 12px;
+            border-radius: 1px;
+            font-size: 11px;
+            font-weight: 200;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-light);
+        }
+
+        /* Play Store Button Styles */
+        .playstore-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 20;
+            cursor: pointer;
+            pointer-events: auto;
+            margin-bottom: 10px;
+        }
+
+        .playstore-btn:hover {
+            background: var(--border);
+            border-color: var(--border-hover);
+        }
+
+        .playstore-btn span {
+            font-size: 14px;
+        }
+
+        /* --- NEW SLIDER STYLES --- */
+        .slider-container {
+            position: relative;
+            overflow: hidden;
+            /* Override parent flex properties */
+            display: block;
+            align-items: initial;
+            justify-content: initial;
+        }
+
+        .slider-images {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider-image {
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+        }
+
+
+        .slider-image img,
+        .slider-image video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slider-image .fit-contain {
+            object-fit: contain;
+            /* This will override the 'cover' property for specific items */
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.4);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+
+        .slider-btn:hover {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .slider-btn.prev {
+            left: 10px;
+        }
+
+        .slider-btn.next {
+            right: 10px;
+        }
+
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: none;
+            padding: 0;
+        }
+
+        .dot.active {
+            background-color: rgba(255, 255, 255, 1);
+        }
+
+        /* --- END SLIDER STYLES --- */
+
+        /* Journey Section */
+        .journey {
+            background: var(--surface);
+            position: relative;
+        }
+
+        .journey::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.01) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .journey-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 80px;
+            align-items: start;
+        }
+
+        .journey-sidebar {
+            position: sticky;
+            top: 120px;
+        }
+
+        .journey-stats {
+            margin-bottom: 40px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 300;
+            color: var(--primary-color);
+        }
+
+        .journey-timeline {
+            position: relative;
+            padding: 0;
+        }
+
+        .timeline-item {
+            display: block;
+            margin-bottom: 60px;
+            position: relative;
+            padding-left: 60px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: 0;
+            bottom: -60px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--border), transparent);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 14px;
+            top: 8px;
+            width: 14px;
+            height: 14px;
+            background: var(--primary-color);
+            border: 3px solid var(--surface);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 2px var(--border);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateX(10px);
+            border-color: var(--border-hover);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .timeline-date {
+            display: inline-block;
+            background: var(--border);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-title {
+            font-size: 22px;
+            font-weight: 300;
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+
+        .timeline-company {
+            font-size: 16px;
+            font-weight: 200;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .timeline-description {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .skill-category {
+            text-align: center;
+            padding: 40px 20px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .skill-title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .skill-list {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 60px;
+            text-align: center;
+        }
+
+        .contact-item {
+            padding: 40px 20px;
+        }
+
+        .contact-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .contact-title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .contact-detail {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-light);
+        }
+
+        .contact-detail a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-detail a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0;
+            text-align: center;
+            background: var(--surface);
+        }
+
+        .footer-text {
+            font-size: 14px;
+            font-weight: 200;
+            color: var(--text-lighter);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 20px;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .projects-header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                flex-direction: row;
+                padding-left: 60px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-content {
+                padding: 0 20px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: 2px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="abstract-bg"></div>
+
+    <header>
+        <nav class="container">
+            <div class="logo">Ashutosh Singh</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#journey">Journey</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1>Game<br>Developer</h1>
+                        <p class="subtitle">"Turning imaginative ideas into immersive gaming experiences."</p>
+                        <p class="description">Creative problem solver and fast learner passionate about crafting
+                            innovative gaming solutions, immersive AR/VR experiences, and interactive digital worlds.
+                        </p>
+
+                        <div class="roles">
+                            <div class="role-tag">Problem Solver</div>
+                            <div class="role-tag">Designer</div>
+                            <div class="role-tag">Coder</div>
+                            <div class="role-tag">3D Modeler</div>
+                            <div class="role-tag">Unity Developer</div>
+                            <div class="role-tag">AR/VR Specialist</div>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual">
+                        <div class="abstract-shape">
+                            <div class="shape-element shape-1"></div>
+                            <div class="shape-element shape-2"></div>
+                            <div class="shape-element shape-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="projects">
+            <div class="container">
+                <div class="projects-header">
+                    <h2 class="section-title">Selected Works</h2>
+                    <div class="project-count">07 Projects</div>
+                </div>
+
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">01</div>
+                                <h3 class="project-title">From Chains To The Skies</h3>
+                                <p class="project-description">A 2D climbing adventure game inspired by Getting Over It
+                                    and Only Up, featuring innovative physics-based movement mechanics that challenge
+                                    players through uniquely designed levels with stylized art.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">C#</span>
+                                    <span class="project-tag">Physics</span>
+                                    <span class="project-tag">2D Game</span>
+                                </div>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        <!-- Slide 1: Image -->
+                                        <div class="slider-image">
+                                            <img src="assets/fcths1.jpg"
+                                                alt="Gameplay screenshot from From Chains To The Skies">
+                                        </div>
+
+                                        <!-- Slide 2: Video -->
+                                        <div class="slider-image">
+                                            <video src="assets/fcths.mp4" muted loop playsinline></video>
+                                            <!--
+                                                - muted: Required for autoplay in most browsers.
+                                                - loop: Makes the video repeat.
+                                                - playsinline: Important for mobile browsers to prevent fullscreen.
+                                            -->
+                                        </div>
+
+                                        <!-- Slide 3: Image -->
+                                        <div class="slider-image">
+                                            <img src="assets/fcths2.jpg"
+                                                alt="Another screenshot from From Chains To The Skies">
+                                        </div>
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 8px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    From Chains To The Skies</h4>
+                                <a href="https://play.google.com/store/apps/details?id=com.cubethrone.fromChainsToTheSkies&pcampaignid=web_share"
+                                    class="playstore-btn" target="_blank" rel="noopener noreferrer">
+                                    <span>🚀</span> Play Store
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">02</div>
+                                <h3 class="project-title">Laila Majnu GTA Style</h3>
+                                <p class="project-description">An open-world 3D game inspired by GTA with Bollywood
+                                    storytelling, featuring lively NPCs, custom vehicles, and iconic Indian landmarks
+                                    including the Taj Mahal in a culturally rich environment.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">C#</span>
+                                    <span class="project-tag">Blender</span>
+                                    <span class="project-tag">Open World</span>
+                                </div>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        <div class="slider-image">
+                                            <img src="assets/lailamajnu2.jpg"
+                                                alt="Gameplay screenshot from laila majnu">
+                                        </div>
+                                        <div class="slider-image">
+                                            <img src="assets/lailamajnu1.jpg"
+                                                alt="Gameplay screenshot from laila majnu">
+                                        </div>
+
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 15px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    Laila Majnu GTA Style</h4>
+                                <a href="https://play.google.com/store/apps/details?id=com.Cubethrone.LailaMajnu&pcampaignid=web_share"
+                                    class="playstore-btn" target="_blank" rel="noopener noreferrer">
+                                    <span>🎮</span> Play Store
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">03</div>
+                                <h3 class="project-title">Arcade Sim</h3>
+                                <p class="project-description">Hypercasual arcade management simulator featuring core
+                                    gameplay systems for machine placement, resource management, customer AI, and
+                                    strategic expansion for an engaging tycoon experience.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">C#</span>
+                                    <span class="project-tag">AdMob</span>
+                                    <span class="project-tag">Simulation</span>
+                                </div>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        <div class="slider-image">
+                                            <img src="assets/arcadesim2.jpg" class="fit-contain"
+                                                alt="Gameplay screenshot from From Chains To The Skies">
+                                        </div>
+                                        <div class="slider-image">
+                                            <img src="assets/arcadesim1.jpg" class="fit-contain"
+                                                alt="Gameplay screenshot from From Chains To The Skies">
+                                        </div>
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 15px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    Arcade Sim</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">04</div>
+                                <h3 class="project-title">AR Menu - Summer of Cocktails</h3>
+                                <p class="project-description">Interactive AR menu allowing users to explore cocktails
+                                    from multiple brands, showcasing recipes and preparation steps in an immersive
+                                    format for event attendees.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">8th Wall</span>
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">JavaScript</span>
+                                    <span class="project-tag">AR</span>
+                                </div>
+                            </div>
+
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        <div class="slider-image">
+                                            <video src="assets/soc.mp4" muted loop playsinline
+                                                class="fit-contain"></video>
+
+                                        </div>
+                                        <div class="slider-image">
+                                            <img src="assets/soc.jpg" class="fit-contain"
+                                                alt="Another screenshot from From Chains To The Skies">
+                                        </div>
+
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 15px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    AR Menu Experience</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">05</div>
+                                <h3 class="project-title">AR Experience - Royal Stag</h3>
+                                <p class="project-description">Interactive augmented reality world map blending 3D
+                                    assets with real environments using chroma key, offering users a dynamic way to
+                                    explore 3D models and animations.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">8th Wall</span>
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">Blender</span>
+                                    <span class="project-tag">AR</span>
+                                </div>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        <div class="slider-image">
+                                            <video src="assets/arfestive.mp4" muted loop playsinline
+                                                class="fit-contain"></video>
+
+                                        </div>
+                                        <div class="slider-image">
+                                            <img src="assets/arFestive1.jpg" class="fit-contain" alt="Ar festive">
+                                        </div>
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 15px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    Royal Stag AR Experience</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">06</div>
+                                <h3 class="project-title">VR Thrill Adventure</h3>
+                                <p class="project-description">VR adventure game with realistic visuals and immersive
+                                    gameplay mechanics for Oculus devices, featuring thrilling scenarios designed to
+                                    deliver engaging, adrenaline-pumping experiences.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">Oculus SDK</span>
+                                    <span class="project-tag">Blender</span>
+                                    <span class="project-tag">VR</span>
+                                </div>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        
+                                        <div class="slider-image">
+                                            <video src="assets/og.mp4" muted loop playsinline></video>
+                                        </div>
+                                        <div class="slider-image">
+                                            <img src="assets/og.jpg"
+                                                alt="Gameplay screenshot of Island Pinball Adventure">
+                                        </div>
+
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 15px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    VR Thrill Adventure</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-card-inner">
+                            <div class="project-card-front">
+                                <div class="project-number">07</div>
+                                <h3 class="project-title">Island Pinball Adventure</h3>
+                                <p class="project-description">A creative reimagining of pinball that takes the action
+                                    out of the cabinet and onto a living, breathing island! Instead of typical bumpers,
+                                    players hit windmills, find treasure chests, and clear entire fields to score
+                                    points.</p>
+                                <div class="project-tags">
+                                    <span class="project-tag">Unity</span>
+                                    <span class="project-tag">C#</span>
+                                    <span class="project-tag">Pinball</span>
+                                    <span class="project-tag">Physics</span>
+                                    <span class="project-tag">3D Game</span>
+                                </div>
+                            </div>
+                            <div class="project-card-back">
+                                <div class="project-image slider-container">
+                                    <div class="slider-images">
+                                        <div class="slider-image">
+                                            <video src="assets/Pinball_Final.mp4" muted loop playsinline class="fit-contain"></video>
+                                        </div>
+                                        <div class="slider-image">
+                                            <img src="assets/pinball.jpg" class="fit-contain"
+                                                alt="Gameplay screenshot of Island Pinball Adventure">
+                                        </div>
+                                    </div>
+                                    <button class="slider-btn prev">&lt;</button>
+                                    <button class="slider-btn next">&gt;</button>
+                                    <div class="slider-dots"></div>
+                                </div>
+                                <h4
+                                    style="margin-top: 8px; color: var(--primary-color); font-size: 16px; font-weight: 300;">
+                                    Island Pinball Adventure</h4>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="journey">
+            <div class="container">
+                <h2 class="section-title">My Journey</h2>
+                <p class="section-subtitle">From student to professional game developer</p>
+
+                <div class="journey-container">
+                    <div class="journey-sidebar">
+                        <div class="journey-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Experience</span>
+                                <span class="stat-value">2+ Years</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Projects</span>
+                                <span class="stat-value">7+ Games</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Technologies</span>
+                                <span class="stat-value">10+ Tools</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Specialization</span>
+                                <span class="stat-value">Unity AR/VR</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="journey-timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">2019 - 2023</div>
+                                <h3 class="timeline-title">Bachelor of Technology</h3>
+                                <div class="timeline-company">NIET Greater Noida • Electronics & Communication
+                                    Engineering</div>
+                                <p class="timeline-description">Built foundational knowledge in electronics and computer
+                                    engineering while discovering my passion for game development and interactive
+                                    technologies. Learned programming fundamentals and developed problem-solving skills
+                                    that became crucial for my career in game development.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Feb 2023 - Aug 2023</div>
+                                <h3 class="timeline-title">Software Engineer Intern</h3>
+                                <div class="timeline-company">Capgemini Engineering</div>
+                                <p class="timeline-description">Gained valuable experience with Go programming, Docker
+                                    containerization, CI/CD pipelines, Linux systems, and Vim editor. This role helped
+                                    me develop strong technical foundations and professional software development
+                                    practices that enhanced my problem-solving abilities.</p>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-date">Jan 2024 - Present</div>
+                                <h3 class="timeline-title">Unity Game Developer</h3>
+                                <div class="timeline-company">VMS Techs</div>
+                                <p class="timeline-description">Currently specializing in Unity development, creating
+                                    engaging casual games, mobile & PC applications, and cutting-edge AR/VR experiences.
+                                    Working extensively with REST APIs, 8th Wall platform, and implementing innovative
+                                    gaming solutions that bridge imagination with reality.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="skills">
+            <div class="container">
+                <h2 class="section-title">Skills & Expertise</h2>
+                <p class="section-subtitle">Multi-disciplinary approach to game development</p>
+
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-icon">⚡</div>
+                        <h3 class="skill-title">Programming</h3>
+                        <p class="skill-list">C#, C++, JavaScript<br>Three.js, REST APIs<br>JSON, MySQL</p>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-icon">🎮</div>
+                        <h3 class="skill-title">Game Engines</h3>
+                        <p class="skill-list">Unity Engine<br>8th Wall<br>AR & VR Development<br>MyWebar</p>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-icon">🎨</div>
+                        <h3 class="skill-title">3D & Design</h3>
+                        <p class="skill-list">Blender<br>Photoshop<br>3D Modeling<br>Visual Design</p>
+                    </div>
+
+                    <div class="skill-category">
+                        <div class="skill-icon">🔧</div>
+                        <h3 class="skill-title">Development Tools</h3>
+                        <p class="skill-list">GitHub, Vim<br>Docker, CI/CD<br>Linux, Go<br>Oculus SDK</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Let's create something amazing together</p>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <h3 class="contact-title">Phone</h3>
+                        <p class="contact-detail">+91 9599471440</p>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <h3 class="contact-title">Email</h3>
+                        <p class="contact-detail">
+                            <a href="mailto:dineshaushutosh@gmail.com">dineshaushutosh@gmail.com</a>
+                        </p>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">🔗</div>
+                        <h3 class="contact-title">Connect</h3>
+                        <p class="contact-detail">
+                            <a href="#" target="_blank">LinkedIn</a> •
+                            <a href="#" target="_blank">GitHub</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="footer-text">© 2024 Ashutosh Singh. Crafted with passion for immersive experiences.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background opacity on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            const scrolled = window.pageYOffset;
+            const opacity = Math.min(scrolled / 100, 1);
+            header.style.background = `rgba(10, 10, 10, ${0.95 + (opacity * 0.05)})`;
+        });
+
+        // Add animation on scroll for project cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe project cards
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(item);
+        });
+
+        // Observe skill categories
+        document.querySelectorAll('.skill-category').forEach(skill => {
+            skill.style.opacity = '0';
+            skill.style.transform = 'translateY(30px)';
+            skill.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(skill);
+        });
+
+        // --- NEW IMAGE SLIDER SCRIPT ---
+        document.querySelectorAll('.project-card').forEach(card => {
+            const sliderContainer = card.querySelector('.slider-container');
+            if (!sliderContainer) return;
+
+            const slider = sliderContainer.querySelector('.slider-images');
+            const prevButton = sliderContainer.querySelector('.slider-btn.prev');
+            const nextButton = sliderContainer.querySelector('.slider-btn.next');
+            const dotsContainer = sliderContainer.querySelector('.slider-dots');
+            const slides = Array.from(slider.querySelectorAll('.slider-image'));
+
+            if (slides.length <= 1) {
+                if (prevButton) prevButton.style.display = 'none';
+                if (nextButton) nextButton.style.display = 'none';
+                if (dotsContainer) dotsContainer.style.display = 'none';
+                return;
+            }
+
+            let currentIndex = 0;
+
+            // Create dots
+            slides.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.classList.add('dot');
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            const dots = Array.from(dotsContainer.querySelectorAll('.dot'));
+
+            function updateControls() {
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentIndex);
+                });
+            }
+
+            function goToSlide(index) {
+                // First, pause any video that might be playing on other slides
+                slides.forEach(slide => {
+                    const video = slide.querySelector('video');
+                    if (video) {
+                        video.pause();
+                    }
+                });
+
+                // Move to the correct slide
+                currentIndex = index;
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+                updateControls();
+
+                // Now, find and play the video on the CURRENT slide (if it exists)
+                const currentSlide = slides[currentIndex];
+                const activeVideo = currentSlide.querySelector('video');
+                if (activeVideo) {
+                    activeVideo.play().catch(error => {
+                        // Autoplay was prevented. This is a common browser policy.
+                        console.log("Browser prevented video autoplay:", error);
+                    });
+                }
+            }
+
+            prevButton.addEventListener('click', () => {
+                const newIndex = (currentIndex - 1 + slides.length) % slides.length;
+                goToSlide(newIndex);
+            });
+
+            nextButton.addEventListener('click', () => {
+                const newIndex = (currentIndex + 1) % slides.length;
+                goToSlide(newIndex);
+            });
+
+            // Initial setup
+            goToSlide(0);
+        });
+
+    </script>
+</body>
+
+</html>
