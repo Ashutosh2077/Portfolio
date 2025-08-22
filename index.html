@@ -448,7 +448,7 @@
             font-size: 14px;
         }
 
-        /* --- NEW SLIDER STYLES --- */
+        /* --- SLIDER STYLES --- */
         .slider-container {
             position: relative;
             overflow: hidden;
@@ -474,6 +474,8 @@
             align-items: center;
             justify-content: center;
             color: var(--text-light);
+            /* --- NEW --- */
+            position: relative; /* Required for positioning the loader */
         }
 
 
@@ -489,6 +491,29 @@
             object-fit: contain;
             /* This will override the 'cover' property for specific items */
         }
+        
+        /* --- NEW: VIDEO LOADER STYLES --- */
+        .video-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            z-index: 5;
+            display: none; /* Hidden by default, JS will show it */
+        }
+        
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
 
         .slider-btn {
             position: absolute;
@@ -942,11 +967,7 @@
                                         <!-- Slide 2: Video -->
                                         <div class="slider-image">
                                             <video src="assets/fcths.mp4" muted loop playsinline></video>
-                                            <!--
-                                                - muted: Required for autoplay in most browsers.
-                                                - loop: Makes the video repeat.
-                                                - playsinline: Important for mobile browsers to prevent fullscreen.
-                                            -->
+                                            <div class="video-loader"></div> <!-- NEW LOADER -->
                                         </div>
 
                                         <!-- Slide 3: Image -->
@@ -1073,7 +1094,7 @@
                                         <div class="slider-image">
                                             <video src="assets/soc.mp4" muted loop playsinline
                                                 class="fit-contain"></video>
-
+                                            <div class="video-loader"></div> <!-- NEW LOADER -->
                                         </div>
                                         <div class="slider-image">
                                             <img src="assets/soc.jpg" class="fit-contain"
@@ -1113,7 +1134,7 @@
                                         <div class="slider-image">
                                             <video src="assets/arfestive.mp4" muted loop playsinline
                                                 class="fit-contain"></video>
-
+                                            <div class="video-loader"></div> <!-- NEW LOADER -->
                                         </div>
                                         <div class="slider-image">
                                             <img src="assets/arFestive1.jpg" class="fit-contain" alt="Ar festive">
@@ -1151,6 +1172,7 @@
                                         
                                         <div class="slider-image">
                                             <video src="assets/og.mp4" muted loop playsinline></video>
+                                            <div class="video-loader"></div> <!-- NEW LOADER -->
                                         </div>
                                         <div class="slider-image">
                                             <img src="assets/og.jpg"
@@ -1190,6 +1212,7 @@
                                     <div class="slider-images">
                                         <div class="slider-image">
                                             <video src="assets/Pinball_Final.mp4" muted loop playsinline class="fit-contain"></video>
+                                            <div class="video-loader"></div> <!-- NEW LOADER -->
                                         </div>
                                         <div class="slider-image">
                                             <img src="assets/pinball.jpg" class="fit-contain"
@@ -1418,7 +1441,7 @@
             observer.observe(skill);
         });
 
-        // --- NEW IMAGE SLIDER SCRIPT ---
+        // --- IMAGE SLIDER SCRIPT ---
         document.querySelectorAll('.project-card').forEach(card => {
             const sliderContainer = card.querySelector('.slider-container');
             if (!sliderContainer) return;
@@ -1494,6 +1517,34 @@
 
             // Initial setup
             goToSlide(0);
+        });
+        
+        // --- NEW: VIDEO LOADER SCRIPT ---
+        document.querySelectorAll('.slider-image video').forEach(video => {
+            // Find the loader within the same parent container
+            const loader = video.parentElement.querySelector('.video-loader');
+            if (!loader) return; // Safety check if loader doesn't exist
+
+            const showLoader = () => {
+                loader.style.display = 'block';
+            };
+            const hideLoader = () => {
+                loader.style.display = 'none';
+            };
+            
+            // Show loader when the video starts loading or is buffering
+            video.addEventListener('loadstart', showLoader);
+            video.addEventListener('waiting', showLoader);
+            
+            // Hide loader when the video is ready to play or has started playing
+            video.addEventListener('canplay', hideLoader);
+            video.addEventListener('playing', hideLoader);
+
+            // Edge case: If video is already cached, it might be ready before listeners are attached.
+            // readyState > 2 means there's enough data to play.
+            if (video.readyState > 2) {
+                hideLoader();
+            }
         });
 
     </script>
